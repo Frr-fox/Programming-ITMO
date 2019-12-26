@@ -1,5 +1,3 @@
-import javafx.scene.effect.Blend;
-
 public class PrisonBoss extends LivingBeing {
     static boolean wish;
     static double money = 16000000;

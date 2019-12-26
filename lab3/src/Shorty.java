@@ -1,12 +1,13 @@
 import java.util.Random;
 import static java.lang.Math.*;
 
-public class Shorty extends LivingBeing implements Movable, Runnable{
+public class Shorty extends Human implements Movable, Runnable{
     protected Action action = Action.DEFAULT;
     protected int degreeOfDirt = 100;
     protected int degreeOfWet = 0;
     private int x;
     private int y;
+    protected Clothes[] clothes = new Clothes[10];
 
     public Shorty(String name, Place place){
         super(name, place);
