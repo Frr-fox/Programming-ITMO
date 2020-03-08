@@ -1,0 +1,13 @@
+help
+info
+insert 5
+P3112
+12
+14
+32
+Полное
+Третий
+нет
+show
+filter_contains_name Jav
+execute_script C:\Users\olesy\IdeaProjects\lab5\src\script.txt
