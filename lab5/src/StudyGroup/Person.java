@@ -17,21 +17,21 @@ public class Person {
     private Location location; //Поле может быть null
 
     /**
-     * Конструтор для создания новых объектов типа Person
+     * Конструктор для создания новых объектов типа Person
      * без параметров
      */
     public Person(){}
 
     /**
      * Конструктор для создание новых объектов типа Person
-     * @param name
-     * @param height
-     * @param eyeColor
-     * @param hairColor
-     * @param nationality
-     * @param z
-     * @param w
-     * @param nameLocation
+     * @param name задает имя админа
+     * @param height задает рост админа
+     * @param eyeColor задает цвет глаз админа
+     * @param hairColor задает цвет волос админа
+     * @param nationality задает национальность админа
+     * @param z задает координату х места
+     * @param w задает координату y места
+     * @param nameLocation задает название места
      */
     public Person(String name, Long height, Color eyeColor, Color hairColor, Country nationality, Float z, Double w, String nameLocation) {
         this.name = name;

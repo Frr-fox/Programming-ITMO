@@ -11,7 +11,7 @@ public class Save extends AbstractCommand {
     Console console;
 
     /**
-     * Конструтор для создания нового объекта
+     * Конструктор для создания нового объекта
      * @param console объект, выполняющий роль receiver'a
      */
     public Save(Console console){
@@ -22,7 +22,7 @@ public class Save extends AbstractCommand {
     }
 
     /**
-     * Переопредленный из абстрактного класса AbstractCommand метод,
+     * Переопределенный из абстрактного класса AbstractCommand метод,
      * позволяющий перенести конечную реализацию команды в метод {@link Console#save()}
      * @param args задает аргументы команды
      */

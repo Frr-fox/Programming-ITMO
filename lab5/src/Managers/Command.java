@@ -8,10 +8,10 @@ import java.io.IOException;
  */
 public interface Command {
     /**
-     * Абстрактный метов, определяющий метод для описания действия выполняемой команды
+     * Абстрактный метод, определяющий реализацию выполняемой команды
      * @param args обозначает аргументы для введенной команды
      * @throws WrongAmountOfArgsException при неправильном введенном количестве аргументов
-     * @throws IsEmptyException , если коллекция пуста
+     * @throws IsEmptyException если коллекция пуста
      * @throws IOException при ошибках парсинга
      */
     void execute(String... args) throws WrongAmountOfArgsException, IsEmptyException, IOException;

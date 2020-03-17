@@ -13,7 +13,7 @@ import static Managers.CommandManager.queue;
 import StudyGroup.FormOfEducation;
 
 /**
- * Класс, предназначенный для вызова команд. В шаблоне Command выаолняющий роль receiver'a
+ * Класс, предназначенный для вызова команд. В шаблоне Command выполняющий роль receiver'a
  * @author Нечкасова Олеся
  */
 public class Console {
@@ -270,6 +270,8 @@ public class Console {
                     case "remove_lower":
                         this.removeLower(reader, arguments);
                         break;
+                    case "execute_script":
+                        throw new StackOverflowError();
                     default:
                         CommandManager.execute(commandName, arguments);
                         break;
@@ -439,7 +441,7 @@ public class Console {
                         for (Map.Entry<Integer, StudyGroup> entry: studyGroupMap.entrySet()) {
                             if (entry.getValue().getName().contains(args[0])) {
                                 flag = true;
-                                System.out.printf("Key: %s, Value: %s\n", entry.getKey(), entry.getValue().toString());
+                                System.out.printf("Key: %s, Value: %s\n\n", entry.getKey(), entry.getValue().toString());
                             }
                         }
                         if (!flag) {

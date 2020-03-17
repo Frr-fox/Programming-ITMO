@@ -12,7 +12,7 @@ public class Exit extends AbstractCommand {
     Console console;
 
     /**
-     * Конструтор для создания нового объекта
+     * Конструктор для создания нового объекта
      * @param console объект, выполняющий роль receiver'a
      */
     public Exit(Console console){
@@ -23,7 +23,7 @@ public class Exit extends AbstractCommand {
     }
 
     /**
-     * Переопредленный из абстрактного класса AbstractCommand метод,
+     * Переопределенный из абстрактного класса AbstractCommand метод,
      * позволяющий перенести конечную реализацию команды в метод {@link Console#exit()} ()}
      * @param args задает аргументы команды
      */

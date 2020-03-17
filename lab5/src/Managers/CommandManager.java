@@ -47,7 +47,7 @@ public class CommandManager {
      * @param commandName определяет название команды
      * @param args определяет аргумента команды
      * @throws WrongAmountOfArgsException при непральном введенном количестве аргументов
-     * @throws IsEmptyException , если коллекция пуста
+     * @throws IsEmptyException если коллекция пуста
      * @throws IOException при ошибках парсинга
      */
      protected static void execute(String commandName, String ... args) throws WrongAmountOfArgsException, IsEmptyException, IOException {

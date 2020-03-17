@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 /**
- * Класс, позволяющий работать с объектами коллеции
+ * Класс, позволяющий работать с объектами коллекции
  * @author Нечкасова Олеся
  */
 public class WorkWithObjects {
@@ -49,7 +49,7 @@ public class WorkWithObjects {
     }
 
     /**
-     * Метод для обновления значения элемента в коллекции
+     * Метод для обновления значения элемента коллекции
      * @param studyGroup объект типа StudyGroup для обновления
      * @param scanner объект типа Scanner для ввода данных с клавиатуры
      * @return объект типа StudyGroup

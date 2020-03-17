@@ -12,7 +12,7 @@ public class History extends AbstractCommand {
     Console console;
 
     /**
-     * Конструтор для создания нового объекта
+     * Конструктор для создания нового объекта
      * @param console объект, выполняющий роль receiver'a
      */
     public History(Console console){
@@ -23,7 +23,7 @@ public class History extends AbstractCommand {
     }
 
     /**
-     * Переопредленный из абстрактного класса AbstractCommand метод,
+     * Переопределенный из абстрактного класса AbstractCommand метод,
      * позволяющий перенести конечную реализацию команды в метод {@link Console#history()}
      * @param args задает аргументы команды
      */

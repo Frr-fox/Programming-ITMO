@@ -14,7 +14,7 @@ public class ExecuteScript extends AbstractCommand {
     Console console;
 
     /**
-     * Конструтор для создания нового объекта
+     * Конструктор для создания нового объекта
      * @param console объект, выполняющий роль receiver'a
      */
     public ExecuteScript(Console console){
@@ -25,7 +25,7 @@ public class ExecuteScript extends AbstractCommand {
     }
 
     /**
-     * Переопредленный из абстрактного класса AbstractCommand метод,
+     * Переопределенный из абстрактного класса AbstractCommand метод,
      * позволяющий перенести конечную реализацию команды в метод {@link Console#executeScript(String[])} ()}
      * @param args задает аргументы команды
      * @throws IOException при неверном введенном количестве аргументов

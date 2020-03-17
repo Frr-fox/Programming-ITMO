@@ -13,7 +13,7 @@ public class AverageOfStudentsCount extends AbstractCommand {
     Console console;
 
     /**
-     * Конструтор для создания нового объекта
+     * Конструктор для создания нового объекта
      * @param console объект, выполняющий роль receiver'a
      */
     public AverageOfStudentsCount(Console console){
@@ -24,7 +24,7 @@ public class AverageOfStudentsCount extends AbstractCommand {
     }
 
     /**
-     * Переопредленный из абстрактного класса AbstractCommand метод,
+     * Переопределенный из абстрактного класса AbstractCommand метод,
      * позволяющий перенести конечную реализацию команды в метод {@link Console#averageOfStudentsCount()}
      * @param args задает аргументы команды
      * @throws IsEmptyException если коллекция пуста

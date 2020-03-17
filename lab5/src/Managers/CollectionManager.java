@@ -26,7 +26,7 @@ public class CollectionManager {
     protected static String filepath = "";
 
     /**
-     * Метод, возвращаюзий значение
+     * Метод, возвращающий значение
      * @return даты инициализации коллекции
      */
     public static String getDateIn() {
