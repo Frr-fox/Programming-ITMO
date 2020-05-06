@@ -1,0 +1,13 @@
+help
+average_of_students_count
+info
+insert 5
+P3112
+12
+14
+32
+Полное
+Третий
+нет
+show
+filter_contains_name Jav
