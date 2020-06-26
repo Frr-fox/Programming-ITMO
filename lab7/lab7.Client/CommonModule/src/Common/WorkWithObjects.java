@@ -32,7 +32,7 @@ public class WorkWithObjects implements Serializable {
     private float z;
     private Double w; //Поле не может быть null
     private String nameLocation; //Поле не может быть null
-
+    private String login;
     /**
      * Метод для добавления элемента в коллекцию
      * @param scanner объект типа Scanner для ввода данных с клавиатуры
@@ -46,7 +46,7 @@ public class WorkWithObjects implements Serializable {
         setSemesterEnum(scanner, writer);
         setPerson(scanner, writer);
         creationDate = LocalDate.now();
-        return new StudyGroup(name, String.valueOf(creationDate), coordinates, studentsCount, formOfEducation, semesterEnum, groupAdmin);
+        return new StudyGroup(name, String.valueOf(creationDate), coordinates, studentsCount, formOfEducation, semesterEnum, groupAdmin, login);
     }
 
     /**
@@ -68,7 +68,7 @@ public class WorkWithObjects implements Serializable {
         studyGroup.setFormOfEducation(formOfEducation);
         studyGroup.setSemesterEnum(semesterEnum);
         studyGroup.setGroupAdmin(groupAdmin);
-        return new StudyGroup(name, coordinates, studentsCount, formOfEducation, semesterEnum, groupAdmin);
+        return new StudyGroup(name, coordinates, studentsCount, formOfEducation, semesterEnum, groupAdmin,login);
     }
 
     /**
@@ -138,10 +138,19 @@ public class WorkWithObjects implements Serializable {
         }
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     /**
      * Метод для задания поля {@link WorkWithObjects#studentsCount}
      * @param scanner объект типа Scanner для ввода данных с клавиатуры
      */
+
     private void setStudentsCount(BufferedReader scanner, Writer writer) throws IOException {
         writer.write("\nВведите количество студентов в группе (от 0, не включая, до 9_223_372_036_854_775_807): ");
         writer.flush();

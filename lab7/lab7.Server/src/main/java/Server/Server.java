@@ -1,48 +1,36 @@
 package Server;
 
-import Common.ConcreteCommand;
+import Common.StudyGroup.*;
 import Server.Common.CommandManager;
 import Server.Common.Connection;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static Server.Common.Connection.*;
-
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
-
     public static void main(String[] args) {
         logger.info("Начата работа сервера.");
-        CommandManager commandManager = new CommandManager();
+        Console console = new Console(new CollectionManager());
+        CommandManager commandManager = new CommandManager(console);
         Connection connection = new Connection();
         Scanner scanner = new Scanner(System.in);
+        UserData userData = new UserData();
+        ExecutorService fixedExecutor = Executors.newFixedThreadPool(5);
+        ExecutorService cachedExecutor = Executors.newCachedThreadPool();
+        DataBaseManager dataBaseManager = new DataBaseManager(commandManager.getCollectionManager());
+        userData.loadUsers();
+
+//        dataBaseManager.addElement(new StudyGroup("name", new Coordinates(2f, 5), 25L, FormOfEducation.DISTANCE_EDUCATION, Semester.FIFTH, new Person("Sasha", 65L, null, Color.YELLOW, Country.SPAIN, null), "log"));
 
         while (true){
-            while (connection.getSocketChannel() != null) {
-                ConcreteCommand concreteCommand = receiveObject();
-                if (concreteCommand != null) {
-                    CommandManager.execute(concreteCommand.getCommandName(), concreteCommand.getArgument());
-                    if (connection.getSocketChannel() != null) sendObject(getResponse());
-                    getResponse().clearAll();
-                }
-            }
-            while (connection.getSocketChannel()==null){
-                System.out.println("Введите команду: \nsave - для сохранения состояние коллекции\nexit - для закрытия сервера\nНажмите ENTER для ожидания подключений");
-                String readLine = scanner.nextLine().trim().toLowerCase();
-                switch (readLine){
-                    case "save":
-                        new Console(commandManager.getCollectionManager()).save();
-                        System.out.println("Сохранено");
-                        break;
-                    case "exit":
-                        System.exit(0);
-                    default:
-                        break;
-                }
-                connection.connectToClient();
-            }
+            connection.connectToClient();
+            if (connection.getSocketChannel() != null)
+                fixedExecutor.execute(new ProcessingRequest(connection, userData, connection.getSocketChannel(), cachedExecutor));
         }
     }
 }

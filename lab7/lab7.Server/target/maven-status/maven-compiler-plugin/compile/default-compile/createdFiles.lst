@@ -15,11 +15,14 @@ Server\Common\Commands\FilterGreaterThanFormOfEducation.class
 Server\Common\Commands\RemoveKey.class
 Server\Server.class
 Server\Console.class
+Server\UserData.class
 Server\Common\Commands\AverageOfStudentsCount.class
 Server\Common\Commands\Save.class
 Server\Common\Commands\RemoveLower.class
 Server\Common\Commands\Clear.class
 Server\Counter.class
 Server\DataBaseManager.class
+Server\Hashing.class
 Server\LimitedQueue.class
+Server\ProcessingRequest.class
 Server\Common\Commands\Help.class

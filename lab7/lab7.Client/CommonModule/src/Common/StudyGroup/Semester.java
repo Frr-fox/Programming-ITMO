@@ -35,7 +35,8 @@ public enum Semester implements Serializable {
      * @param arg строковая переменная для обозначения номера семестра
      * @return возвращающий объект типа Semester
      */
-    public static Semester parse(String arg) {
+    public static Semester parse(String arg) { ;
+        if (arg == null) return  null;
         switch (arg) {
             case "FIRST":
                 return FIRST;

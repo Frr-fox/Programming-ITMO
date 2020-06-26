@@ -1,6 +1,7 @@
 package Server.Common;
 
 import Common.ConcreteCommand;
+import Common.Request;
 import Common.Response;
 import Server.Server;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class Connection {
 
     public void connectToClient() {
         try {
-            logger.info("Ожидание подключения на порт {}", getPort());
+//            logger.info("Ожидание подключения на порт {}", getPort());
             socketChannel = getServerSocketChannel().accept();
             if (socketChannel != null) {
                 socketChannel.configureBlocking(false);
@@ -48,7 +49,7 @@ public class Connection {
         }
     }
 
-    public static void sendObject(Response obj) {
+    public synchronized static void sendObject(Response obj, SocketChannel socketChannel) {
         try {
             logger.info("Осуществляется сериализация и отправка объекта");
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -64,28 +65,41 @@ public class Connection {
         }
     }
 
-    public static ConcreteCommand receiveObject() {
+    public synchronized static Request receiveObject(SocketChannel socketChannel) {
         try {
-            ByteBuffer buf = ByteBuffer.allocate(800000000);
+            ByteBuffer buf = ByteBuffer.allocate(1024);
             int n = 0;
+            Thread.sleep(50);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            while ((n = socketChannel.read(buf)) > 0) {
-                logger.info("Осуществляется чтение запроса и десериализация объекта");
-                buf.flip();
-                outputStream.write(buf.array(), 0, n);
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-                ObjectInputStream inStream = new ObjectInputStream(inputStream);
-                ConcreteCommand obj = (ConcreteCommand) inStream.readObject();
-                buf.clear();
-                return obj;
+            if (socketChannel != null) {
+                if((n = socketChannel.read(buf)) > 0) {
+                    logger.info("Осуществляется чтение запроса и десериализация объекта");
+                    logger.info("Считываются данные в буфер");
+                    buf.flip();
+                    outputStream.write(buf.array(), 0, n);
+                    buf.clear();
+                    while ((n = socketChannel.read(buf)) > 0) {
+                        logger.info("Считываются данные в буфер");
+                        buf.flip();
+                        outputStream.write(buf.array(), 0, n);
+                        buf.clear();
+                    }
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+                    ObjectInputStream inStream = new ObjectInputStream(inputStream);
+                    Request obj = (Request) inStream.readObject();
+                    return obj;
+                }
             }
             return null;
         } catch (IOException e) {
             logger.error("Возникла ошибка при чтении запроса с клиента: {}: {}", e.getClass().toString().substring(6),  e.getMessage());
-            closeSocketChannel();
+           closeSocketChannel(socketChannel);
             return null;
         } catch (ClassNotFoundException e) {
             logger.error("Возникла ошибка сериализации: нужный класс не найден");
+            return null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -106,11 +120,12 @@ public class Connection {
         return response;
     }
 
-    public static void closeSocketChannel(){
+    public static void closeSocketChannel(SocketChannel socketChannel){
         try {
             logger.info("Закрытие сокета");
             socketChannel.close();
             socketChannel = null;
+            Thread.currentThread().interrupt();
             logger.info("Соединение с клиентом остановлено.");
         } catch (IOException e) {
             logger.error("Не удалось закрыть сокет");

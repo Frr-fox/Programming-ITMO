@@ -21,10 +21,10 @@ public class Exit extends AbstractCommand {
 
     /**
      * Переопределенный из абстрактного класса AbstractCommand метод,
-     * позволяющий перенести конечную реализацию команды в метод {@link Console#exit()} ()}
+     * позволяющий перенести конечную реализацию команды в метод {@link Console#exit(Object[] args)} ()}
      */
     @Override
     public void execute(Object[] args) {
-        console.exit();
+        console.exit(args);
     }
 }

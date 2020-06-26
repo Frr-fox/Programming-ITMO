@@ -34,7 +34,8 @@ public enum Country implements Serializable {
      * @return возвращающий объект типа Country
      */
     public static Country parse(String arg) {
-        switch (arg) {
+        if (arg == null) return null;
+        else switch (arg) {
             case "RUSSIA":
                 return RUSSIA;
             case "SPAIN":

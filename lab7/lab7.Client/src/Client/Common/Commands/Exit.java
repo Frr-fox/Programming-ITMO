@@ -3,6 +3,7 @@ package Client.Common.Commands;
 import Client.WrongAmountOfArgsException;
 import Common.AbstractCommand;
 import Common.ConcreteCommand;
+import Common.Request;
 
 import java.io.IOException;
 
@@ -32,8 +33,9 @@ public class Exit extends AbstractCommand {
         } else {
             System.out.println("Работа завершена. Соединение с сервером прервано");
             ConcreteCommand concreteCommand = new ConcreteCommand(ConcreteCommand.parseCommandName("exit"), ConcreteCommand.parseCommandArg(""));
+            Request request = new Request(concreteCommand,"","",false,false,false);
             try {
-                sendObject(concreteCommand);
+                sendObject(request);
             } catch (IOException e) {
                 e.printStackTrace();
             }

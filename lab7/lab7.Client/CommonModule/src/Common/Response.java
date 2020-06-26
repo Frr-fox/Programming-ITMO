@@ -10,6 +10,15 @@ import java.util.Map;
 public class Response implements Serializable {
     private String answer = "";
     private Map<Integer, StudyGroup> map = new LinkedHashMap<>();
+    private boolean isAccess = false;
+
+    public boolean isAccess() {
+        return isAccess;
+    }
+
+    public void setAccess(boolean access) {
+        isAccess = access;
+    }
 
     public boolean isMap(){
         return !map.isEmpty();
@@ -46,9 +55,14 @@ public class Response implements Serializable {
     public void clearMap(){
         map = new HashMap<>();
     }
+
+    public void clearAccess(){
+        isAccess = false;
+    }
     public void clearAll(){
         clearAnswer();
         clearMap();
+        clearAccess();
     }
 }
 

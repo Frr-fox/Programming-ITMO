@@ -19,6 +19,7 @@ public class CollectionManager {
     private String date = new Date().toString();
     /**Поле для хранения пути к файлу с данными**/
     private final Logger logger = LoggerFactory.getLogger(Server.class);
+    private DataBaseManager dataBaseManager;
 
     public CollectionManager() {}
 
@@ -43,5 +44,13 @@ public class CollectionManager {
 
     public Map<Integer, StudyGroup> getStudyGroupMap() {
         return studyGroupMap;
+    }
+
+    public void setDataBaseManager(DataBaseManager dataBaseManager) {
+        this.dataBaseManager = dataBaseManager;
+    }
+
+    public DataBaseManager getDataBaseManager() {
+        return dataBaseManager;
     }
 }

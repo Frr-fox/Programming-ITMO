@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="CommonModule">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../CommonModule.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lab7.Client/out/artifacts/CommonModule7_jar/CommonModule.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

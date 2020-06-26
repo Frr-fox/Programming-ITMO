@@ -9,6 +9,9 @@ public class Connection {
     private DataChange dataChange = new DataChange(this);
     private String LOGIN;
     private String PASS;
+    private boolean isRegistered;
+    private boolean isCommand;
+    private String registered;
 
     public Connection() {
         int port = 1444;
@@ -23,10 +26,29 @@ public class Connection {
 
     public void login(){
         System.out.println("Для работы с базой данных необходима авторизация.");
+        System.out.println("Выберите один из вариантов:");
+        System.out.println("( 1 ) Я новенький");
+        System.out.println("( 2 ) Я уже смешарик");
         Scanner scanner = new Scanner(System.in);
+        registered = scanner.nextLine().trim();
+        switch (registered){
+            case "1":
+                setRegistered(false);
+                setCommand(false);
+                System.out.println("Тогда нужно зарегистрироваться");
+                break;
+            case "2":
+                setRegistered(true);
+                setCommand(false);
+                System.out.println("Тогда нужно залогиниться");
+                break;
+            default:
+                System.out.println("Введите 1 или 2");
+                login();
+        }
         System.out.print("Введите логин: ");
         LOGIN = scanner.nextLine();
-        System.out.println("Введите пароль: ");
+        System.out.print("Введите пароль: ");
         PASS = scanner.nextLine();
     }
 
@@ -48,5 +70,21 @@ public class Connection {
 
     public String getPASS() {
         return PASS;
+    }
+
+    public boolean isRegistered() {
+        return isRegistered;
+    }
+
+    public void setRegistered(boolean registered) {
+        isRegistered = registered;
+    }
+
+    public boolean isCommand() {
+        return isCommand;
+    }
+
+    public void setCommand(boolean command) {
+        isCommand = command;
     }
 }

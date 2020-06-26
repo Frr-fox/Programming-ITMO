@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lab7.Client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab7_Client_jar</output-path>
+    <root id="archive" name="lab7.Client.jar">
+      <element id="module-output" name="lab7.Client" />
+      <element id="module-output" name="CommonModule" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lab7.Client/out/artifacts/CommonModule7_jar/CommonModule.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

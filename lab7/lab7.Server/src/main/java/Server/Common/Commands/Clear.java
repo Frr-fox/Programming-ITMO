@@ -25,6 +25,6 @@ public class Clear extends AbstractCommand {
      */
     @Override
     public void execute(Object[] args) {
-        console.clear();
+        console.clear(args);
     }
 }

@@ -1,5 +1,6 @@
 package Client.Common;
 
+import Client.LimitedQueue;
 import Client.NoCommandException;
 import Client.WrongAmountOfArgsException;
 import Client.Common.Commands.*;
@@ -7,12 +8,10 @@ import Common.ConcreteCommand;
 
 import Common.AbstractCommand;
 import Common.Response;
-import Common.StudyGroup.StudyGroup;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Класс, предназначенный для вызова команд. В шаблоне Common.Command выаолняющий роль invoker'a
@@ -20,6 +19,7 @@ import java.util.Map;
  */
 public class CommandManager implements Serializable {
     public static HashMap<String, AbstractCommand> commandMap = new LinkedHashMap<>();
+    public static LimitedQueue<String> queue = new LimitedQueue<String>(15);
     private static Object[] argument;
 
     {
@@ -54,8 +54,9 @@ public class CommandManager implements Serializable {
      * @param args определяет аргумента команды
      * @throws WrongAmountOfArgsException при непральном введенном количестве аргументов
      */
-     public static void execute(String commandName, Object[] args) throws WrongAmountOfArgsException, NoCommandException {
+     public static void execute(String commandName, Object... args) throws WrongAmountOfArgsException, NoCommandException {
          AbstractCommand command = commandMap.get(commandName);
+         queue.add(commandName);
         if (command == null) {
             throw new NoCommandException(commandName);
         } else {

@@ -3,13 +3,14 @@ package Server;
 import Common.StudyGroup.StudyGroup;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Класс для генерации уникального значения id
  * @author Нечкасова Олеся
  */
 public class Counter {
-    int count = 0;
+    private AtomicInteger count = new AtomicInteger(0);
     CollectionManager collectionManager;
 
     Counter(CollectionManager collectionManager){
@@ -20,17 +21,17 @@ public class Counter {
      * Метод, предназначенный для возвращения
      * @return сгенерируемого значения id
      */
-    public int increase(){
-        count++;
+    public AtomicInteger increase(){
+        count.incrementAndGet();
         return count;
     }
 
-    public int generate(){
+    public AtomicInteger generate(){
         boolean flag = false;
         while (!flag){
-            count = (int) (Math.random()*1000000);
+            count = new AtomicInteger((int)(Math.random()*1000000));
             for (Map.Entry<Integer, StudyGroup> entry: collectionManager.getStudyGroupMap().entrySet()){
-                if (count != entry.getValue().getId()) {
+                if (count != new AtomicInteger(entry.getValue().getId())) {
                     flag = true;
                     break;
                 }
@@ -40,6 +41,6 @@ public class Counter {
     }
 
     public void clearing(){
-        count = 0;
+        count = new AtomicInteger(0);
     }
 }

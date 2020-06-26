@@ -25,6 +25,8 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
     private Semester semesterEnum; //Поле может быть null
     private Person groupAdmin; //Поле может быть null
 
+    private String login;
+
     private String creation;
     private int thisKey;
 
@@ -40,7 +42,8 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
      * @param semesterEnum номер семестра
      * @param groupAdmin админ группы
      */
-    public StudyGroup(String name, String creation, Coordinates coordinates, Long studentsCount, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin) {
+    public StudyGroup(String name, String creation, Coordinates coordinates, Long studentsCount, FormOfEducation formOfEducation,
+                      Semester semesterEnum, Person groupAdmin, String login) {
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDate.parse(creation);
@@ -49,6 +52,7 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
         this.formOfEducation = formOfEducation;
         this.semesterEnum = semesterEnum;
         this.groupAdmin = groupAdmin;
+        this.login = login;
     }
 
     /**
@@ -68,7 +72,9 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
      * @param w координата y местоположения админа
      * @param nameLocation название места, где находится админ
      */
-    public StudyGroup(String name, Float x, Integer y, Long studentsCount, FormOfEducation formOfEducation, Semester semesterEnum, String namePerson, Long height, Color eyeColor, Color hairColor, Country nationality, Float z, Double w, String nameLocation){
+    public StudyGroup(String name, Float x, Integer y, Long studentsCount, FormOfEducation formOfEducation, Semester semesterEnum,
+                      String namePerson, Long height, Color eyeColor, Color hairColor, Country nationality, Float z, Double w,
+                      String nameLocation, String login){
         this.name = name;
         this.coordinates = new Coordinates(x, y);
         this.creationDate = LocalDate.now();
@@ -76,6 +82,7 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
         this.formOfEducation = formOfEducation;
         this.semesterEnum = semesterEnum;
         this.groupAdmin = new Person(namePerson, height, eyeColor, hairColor, nationality, z, w, nameLocation );
+        this.login = login;
     }
 
     /**
@@ -87,7 +94,8 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
      * @param semesterEnum номер семестра
      * @param groupAdmin админ группы
      */
-    public StudyGroup(String name, Coordinates coordinates, Long studentsCount, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin) {
+    public StudyGroup(String name, Coordinates coordinates, Long studentsCount, FormOfEducation formOfEducation,
+                      Semester semesterEnum, Person groupAdmin, String login) {
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDate.now();
@@ -95,6 +103,7 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
         this.formOfEducation = formOfEducation;
         this.semesterEnum = semesterEnum;
         this.groupAdmin = groupAdmin;
+        this.login = login;
     }
 
     public boolean parse(){
@@ -202,7 +211,13 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
             this.creation = LocalDate.now().toString();
         }
     }
+    public String getLogin() {
+        return login;
+    }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
@@ -239,13 +254,15 @@ public class StudyGroup implements Serializable, Comparable <StudyGroup>{
         if (groupAdmin == null) {
             return "id = " + id + "; name = " + name + "; coordinates: " + coordinates.toString()
                     + "; creationDate = " + creation + "; studentsCount = " + studentsCount + ";\nformOfEducation = " + formOfEducation
-                    + "; semesterEnum = " + semesterEnum + "; Person: null";
+                    + "; semesterEnum = " + semesterEnum + "; Person: null"+ "\nUser: " + login;
         } else {
             return "id = " + id + "; name = " + name + "; coordinates: " + coordinates.toString()
                     + "; creationDate = " + creation + "; studentsCount = " + studentsCount + ";\nformOfEducation = " + formOfEducation
-                    + "; semesterEnum = " + semesterEnum + ";\nPerson: " + groupAdmin.toString();
+                    + "; semesterEnum = " + semesterEnum + ";\nPerson: " + groupAdmin.toString() + "\nUser: " + login;
         }
     }
+
+
 
     @Override
     public int compareTo(StudyGroup o) {

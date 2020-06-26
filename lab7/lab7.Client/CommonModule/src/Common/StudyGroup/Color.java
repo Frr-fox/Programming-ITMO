@@ -34,6 +34,7 @@ public enum Color implements Serializable {
      * @return возвращающий объект типа Color
      */
     public static Color parse(String arg) {
+        if (arg == null) return null;
         switch (arg) {
             case "BLACK":
                 return BLACK;

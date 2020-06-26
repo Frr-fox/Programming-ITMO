@@ -19,12 +19,12 @@ public class CommandManager {
     public static HashMap<String, AbstractCommand> commandMap = new LinkedHashMap<>();
     public static LimitedQueue<String> queue = new LimitedQueue<String>(15);
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
-    private CollectionManager collectionManager = new CollectionManager();
+    private CollectionManager collectionManager;
     private Console console;
 
-    {
-        console = new Console();
-        console.setCollectionManager(this.collectionManager);
+    public CommandManager(Console console){
+        this.console = console;
+        this.collectionManager = console.getCollectionManager();
         logger.info("Инициализация команд");
         this.register(new Help(console));
         this.register(new Info(console));
@@ -57,7 +57,7 @@ public class CommandManager {
      * @param args обозначает аргументы команды
      * @throws IsEmptyException если коллекция пуста
      */
-     public static void execute(String commandName, Object[] args) throws IsEmptyException {
+     public static synchronized void execute(String commandName, Object[] args) throws IsEmptyException {
          logger.info("Начато выполнение команды {}", commandName);
          queue.add(commandName);
          AbstractCommand command = commandMap.get(commandName);
