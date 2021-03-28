@@ -15,9 +15,7 @@ public class AverageOfStudentsCount extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public AverageOfStudentsCount(Console console){
-        this.setCommandName("average_of_students_count");
-        this.setText("Выводит среднее значение поля studentsCount для всех элементов коллекции");
-        this.setArguments("");
+        super("average_of_students_count", "Выводит среднее значение поля studentsCount для всех элементов коллекции", "");
         this.console = console;
     }
 

@@ -11,11 +11,17 @@ import java.io.Serializable;
  */
 abstract public class AbstractCommand implements Command, Serializable {
     /**Поле названия команды**/
-    private String commandName;
+    private final String commandName;
     /**Поле описания действия команды**/
-    private String text;
+    private final String text;
     /**Поле описания аргуметов для команды**/
-    private String arguments;
+    private final String arguments;
+
+    public AbstractCommand(String commandName, String text, String arguments) {
+        this.commandName = commandName;
+        this.text = text;
+        this.arguments = arguments;
+    }
 
     public String getCommandName(){
         return commandName;
@@ -27,17 +33,5 @@ abstract public class AbstractCommand implements Command, Serializable {
 
     public String getArguments() {
         return arguments;
-    }
-
-    protected void setCommandName(String commandName) {
-        this.commandName = commandName;
-    }
-
-    protected void setText(String text) {
-        this.text = text;
-    }
-
-    protected void setArguments(String arguments) {
-        this.arguments = arguments;
     }
 }

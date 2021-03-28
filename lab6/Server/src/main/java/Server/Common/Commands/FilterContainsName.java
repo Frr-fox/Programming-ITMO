@@ -16,9 +16,7 @@ public class FilterContainsName extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public FilterContainsName(Console console) {
-        this.setCommandName("filter_contains_name");
-        this.setText("Выводит элементы, значение поля name которых содержит заданную подстроку");
-        this.setArguments(" name");
+        super("filter_contains_name", "Выводит элементы, значение поля name которых содержит заданную подстроку", " name");
         this.console = console;
     }
 

@@ -14,9 +14,7 @@ public class RemoveKey extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public RemoveKey(){
-        this.setCommandName("remove_key");
-        this.setText("Удаляет элемент из коллекции по его ключу");
-        this.setArguments(" key");
+        super("remove_key", "Удаляет элемент из коллекции по его ключу", " key");
     }
 
     /**

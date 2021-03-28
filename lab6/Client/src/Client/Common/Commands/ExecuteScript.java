@@ -14,9 +14,7 @@ public class ExecuteScript extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public ExecuteScript(){
-        this.setCommandName("execute_script");
-        this.setText("Считывает и исполняет скрипт из указанного файла");
-        this.setArguments(" file_name");
+        super("execute_script", "Считывает и исполняет скрипт из указанного файла", " file_name");
     }
 
     /**

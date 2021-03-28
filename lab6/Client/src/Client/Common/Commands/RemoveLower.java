@@ -20,9 +20,7 @@ public class RemoveLower extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public RemoveLower(){
-        this.setCommandName("remove_lower");
-        this.setText("Удаляет из коллекции все элементы, меньшие, чем заданный");
-        this.setArguments(" {element}");
+        super("remove_lower", "Удаляет из коллекции все элементы, меньшие, чем заданный", " {element}");
     }
 
     /**

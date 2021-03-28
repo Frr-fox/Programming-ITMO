@@ -15,9 +15,7 @@ public class ExecuteScript extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public ExecuteScript(Console console){
-        this.setCommandName("execute_script");
-        this.setText("Считывает и исполняет скрипт из указанного файла");
-        this.setArguments(" file_name");
+        super("execute_script", "Считывает и исполняет скрипт из указанного файла", " file_name");
         this.console = console;
     }
 

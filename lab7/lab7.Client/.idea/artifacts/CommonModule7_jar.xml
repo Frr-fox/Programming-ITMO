@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="CommonModule7:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/CommonModule7_jar</output-path>
-    <root id="archive" name="CommonModule.jar">
-      <element id="module-output" name="CommonModule" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/out/artifacts/CommonModulefor7_jar/CommonModuleFor7.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

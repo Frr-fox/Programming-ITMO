@@ -15,9 +15,7 @@ public class Show extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Show(Console console){
-        this.setCommandName("show");
-        this.setText("Выводит в стандартный поток вывода все элементы коллекции в строковом представлении");
-        this.setArguments("");
+        super("show", "Выводит в стандартный поток вывода все элементы коллекции в строковом представлении", "");
         this.console = console;
     }
 

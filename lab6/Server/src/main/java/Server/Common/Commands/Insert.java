@@ -15,9 +15,7 @@ public class Insert extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Insert(Console console){
-        this.setCommandName("insert");
-        this.setText("Добавляет новый элемент с заданным ключом");
-        this.setArguments(" key {element}");
+        super("insert", "Добавляет новый элемент с заданным ключом", " key {element}");
         this.console = console;
     }
 

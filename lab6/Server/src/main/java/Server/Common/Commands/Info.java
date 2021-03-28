@@ -15,9 +15,7 @@ public class Info extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Info(Console console){
-        this.setCommandName("info");
-        this.setText("Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов)");
-        this.setArguments("");
+        super("info", "Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов)", "");
         this.console = console;
     }
 

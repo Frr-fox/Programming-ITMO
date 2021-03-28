@@ -27,6 +27,7 @@ public class Connection {
             SocketAddress socketAddress = new InetSocketAddress(port);
             serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.bind(socketAddress);
+            serverSocketChannel.configureBlocking(false);
         } catch (IOException e){
             response.addLineToAnswer("Ошибка подключения: " + e.getMessage());
             logger.error("Ошибка подключения: {}", e.getMessage());
@@ -37,8 +38,10 @@ public class Connection {
         try {
             logger.info("Ожидание подключения на порт {}", getPort());
             socketChannel = getServerSocketChannel().accept();
-            socketChannel.configureBlocking(false);
-            logger.info("Соединение с клиентским приложением установлено");
+            if (socketChannel != null) {
+                socketChannel.configureBlocking(false);
+                logger.info("Соединение с клиентским приложением установлено");
+            }
         } catch (IOException e) {
             response.addLineToAnswer("Ошибка подключения: " + e.getMessage());
             logger.error("Ошибка подключения: {}: {}", e.getClass().toString().substring(6), e.getMessage());
@@ -54,7 +57,7 @@ public class Connection {
             outStream.flush();
             ByteBuffer buf = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
             if (socketChannel.isConnected() && buf.limit()!=0) {
-                socketChannel.write(buf); //отправка
+                socketChannel.write(buf);
             }
         } catch (IOException e) {
             logger.error("Возникла ошибка при отправке ответа клиенту: {}", e.getMessage());
@@ -107,6 +110,8 @@ public class Connection {
         try {
             logger.info("Закрытие сокета");
             socketChannel.close();
+            socketChannel = null;
+            logger.info("Соединение с клиентом остановлено.");
         } catch (IOException e) {
             logger.error("Не удалось закрыть сокет");
         }

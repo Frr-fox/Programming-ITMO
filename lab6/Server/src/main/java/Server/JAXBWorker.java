@@ -2,9 +2,10 @@ package Server;
 
 import Common.StudyGroup.StudyGroup;
 
-import static Server.CollectionManager.studyGroupMap;
-
 import Common.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -16,7 +17,8 @@ import java.util.Map;
  * Класс, предназначенный для парсинга объектов типа Client.Common.Client.Common.Commands.Commands.Common.Common.StudyGroup в файл формата xml и обратно
  * @author Нечкасова Олеся
  */
-class JAXBWorker {
+public class JAXBWorker {
+    private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
     /**
      * Метод для сохранения дынных в файл формата xml
@@ -24,26 +26,39 @@ class JAXBWorker {
      * @param filepath задает путь к файлу
      */
     public static void save(CollectionManager studyGroupMap, String filepath) {
+        logger.info("Коллекция сохранена");
         convertObjectToXml(studyGroupMap, filepath);
     }
 
     /**
      * Метод для парсинга их xml в объект
      * @param filepath задает путь к файлу
-     * @throws IOException при ошибках загрузки файла
      */
-    public static void load(String filepath) throws IOException {
-        CollectionManager collectionManager = fromXmlToObject(filepath);
+    public static CollectionManager load(String filepath) {
+        logger.info("Выполняется загрузка коллекции...");
+        CollectionManager collectionManager = null;
         try {
-            for (Map.Entry<Integer, StudyGroup> entry: studyGroupMap.entrySet()){
-                entry.getValue().setThisKey(entry.getKey());
-                if (!entry.getValue().parse()){
-                    throw new ParseException();
+            collectionManager = fromXmlToObject(filepath);
+            if (collectionManager != null) {
+                for (Map.Entry<Integer, StudyGroup> entry : collectionManager.getStudyGroupMap().entrySet()) {
+                    entry.getValue().setThisKey(entry.getKey());
+                    if (!entry.getValue().parse()) {
+                        throw new ParseException();
+                    }
+                }
+                if (collectionManager.getStudyGroupMap().isEmpty()) {
+                    logger.warn("Коллекция из файла не загружена. Неправильные данные в xml файле. ");
+                } else {
+                    logger.info("Коллекция из файла загружена!");
                 }
             }
         } catch (ParseException e) {
-            studyGroupMap.clear();
+            logger.warn("Возникла ошибка при парсинге данных");
+            collectionManager.getStudyGroupMap().clear();
+        } catch (IOException e){
+            logger.warn("Возникла ошибка при загрузки файла");
         }
+        return collectionManager;
     }
 
     /**

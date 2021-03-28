@@ -16,9 +16,7 @@ public class Save extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Save(Console console){
-        this.setCommandName("save");
-        this.setText("Сохраняет коллекцию в файл");
-        this.setArguments("");
+        super("save", "Сохраняет коллекцию в файл", "");
         this.console = console;
     }
 

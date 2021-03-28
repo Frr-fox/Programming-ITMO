@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Built-By: olesy
-Created-By: Apache Maven 3.6.1
-Build-Jdk: 1.8.0_221
-Main-Class: Server.Server

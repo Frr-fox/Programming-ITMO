@@ -13,9 +13,7 @@ public class Show extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Show(){
-        this.setCommandName("show");
-        this.setText("Выводит в стандартный поток вывода все элементы коллекции в строковом представлении");
-        this.setArguments("");
+        super("show", "Выводит в стандартный поток вывода все элементы коллекции в строковом представлении", "");
     }
 
     /**

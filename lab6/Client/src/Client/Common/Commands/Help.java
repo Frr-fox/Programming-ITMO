@@ -13,9 +13,7 @@ public class Help extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Help(){
-        this.setCommandName("help");
-        this.setText("Эта команда выводит справку по доступным командам");
-        this.setArguments("");
+        super("help", "Эта команда выводит справку по доступным командам", "");
     }
 
     /**

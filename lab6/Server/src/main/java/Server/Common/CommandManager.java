@@ -19,10 +19,15 @@ public class CommandManager {
     public static HashMap<String, AbstractCommand> commandMap = new LinkedHashMap<>();
     public static LimitedQueue<String> queue = new LimitedQueue<String>(15);
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
+    private CollectionManager collectionManager;
+    private Console console;
 
     {
+        CollectionManager collectionManager = new CollectionManager();
+        this.collectionManager = JAXBWorker.load(collectionManager.getFilepath());
+        console = new Console();
+        console.setCollectionManager(this.collectionManager);
         logger.info("Инициализация команд");
-        Console console = new Console();
         this.register(new Help(console));
         this.register(new Info(console));
         this.register(new Show(console));
@@ -63,4 +68,12 @@ public class CommandManager {
              getResponse().addLineToAnswer("Команды " + commandName + " нет в списке");
          } else command.execute(args);
      }
+
+    public CollectionManager getCollectionManager() {
+        return collectionManager;
+    }
+
+    public Console getConsole() {
+        return console;
+    }
 }

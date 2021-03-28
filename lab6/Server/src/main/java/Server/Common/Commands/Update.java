@@ -15,9 +15,7 @@ public class Update extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Update(Console console){
-        this.setCommandName("update");
-        this.setText("Обновляет значение элемента коллекции, id которого равен заданному");
-        this.setArguments(" id {element}");
+        super("update", "Обновляет значение элемента коллекции, id которого равен заданному", " id {element}");
         this.console = console;
     }
 

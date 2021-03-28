@@ -1,12 +1,12 @@
 package Client.Common;
 
-import Client.Common.Commands.Exit;
 import Common.ConcreteCommand;
 import Common.Response;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 public class DataChange {
     private static Connection connection;
@@ -33,6 +33,10 @@ public class DataChange {
     public static Response[] receiveAll() throws IOException {
         Response[] arg = new Response[20];
         try {
+            long time = new Date().getTime();
+            while (connection.getSocket().getInputStream().available() <= 0) {
+                if ((new Date().getTime()- time) > 500) return null;
+            }
             ObjectInputStream inStream = new ObjectInputStream(connection.getSocket().getInputStream());
             for (int i=0; connection.getSocket().getInputStream().available() > 0; i++) {
                 arg[i] = (Response) inStream.readObject();

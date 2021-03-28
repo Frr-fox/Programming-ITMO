@@ -14,9 +14,7 @@ public class FilterContainsName extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public FilterContainsName() {
-        this.setCommandName("filter_contains_name");
-        this.setText("Выводит элементы, значение поля name которых содержит заданную подстроку");
-        this.setArguments(" name");
+        super("filter_contains_name", "Выводит элементы, значение поля name которых содержит заданную подстроку", " name");
     }
 
     /**

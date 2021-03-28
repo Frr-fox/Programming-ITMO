@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class Connection {
     private Socket socket;
-    private DataChange dataChange = new DataChange(this);//Вроде не за чем
+    private DataChange dataChange = new DataChange(this);
 
     public Connection() {
         int port = 1444;

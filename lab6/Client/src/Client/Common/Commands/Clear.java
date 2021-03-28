@@ -13,9 +13,7 @@ public class Clear extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Clear(){
-        this.setCommandName("clear");
-        this.setText("Очищает коллекцию");
-        this.setArguments("");
+        super("clear", "Очищает коллекцию", "");
     }
 
     /**

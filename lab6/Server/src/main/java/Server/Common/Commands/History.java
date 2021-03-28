@@ -15,9 +15,7 @@ public class History extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public History(Console console){
-        this.setCommandName("history");
-        this.setText("Выводит последние 15 команд ");
-        this.setArguments("");
+        super("history", "Выводит последние 15 команд ", "");
         this.console = console;
     }
 

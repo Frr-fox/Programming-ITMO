@@ -20,9 +20,7 @@ public class Insert extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Insert(){
-        this.setCommandName("insert");
-        this.setText("Добавляет новый элемент с заданным ключом");
-        this.setArguments(" key {element}");
+        super("insert", "Добавляет новый элемент с заданным ключом", " key {element}");
     }
 
     /**

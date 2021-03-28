@@ -15,9 +15,7 @@ public class Clear extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Clear(Console console){
-        this.setCommandName("clear");
-        this.setText("Очищает коллекцию");
-        this.setArguments("");
+        super("clear", "Очищает коллекцию", "");
         this.console = console;
     }
 

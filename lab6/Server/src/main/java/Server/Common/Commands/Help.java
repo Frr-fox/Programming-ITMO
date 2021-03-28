@@ -15,9 +15,7 @@ public class Help extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Help(Console console){
-        this.setCommandName("help");
-        this.setText("Эта команда выводит справку по доступным командам");
-        this.setArguments("");
+        super("help", "Эта команда выводит справку по доступным командам", "");
         this.console = console;
     }
 

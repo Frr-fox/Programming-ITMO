@@ -20,9 +20,7 @@ public class Update extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Update(){
-        this.setCommandName("update");
-        this.setText("Обновляет значение элемента коллекции, id которого равен заданному");
-        this.setArguments(" id {element}");
+        super("update", "Обновляет значение элемента коллекции, id которого равен заданному", " id {element}");
     }
 
     /**

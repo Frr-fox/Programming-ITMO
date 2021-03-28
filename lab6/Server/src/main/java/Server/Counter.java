@@ -9,22 +9,27 @@ import java.util.Map;
  * @author Нечкасова Олеся
  */
 public class Counter {
-    static int count = 0;
+    int count = 0;
+    CollectionManager collectionManager;
+
+    Counter(CollectionManager collectionManager){
+        this.collectionManager = collectionManager;
+    }
 
     /**
      * Метод, предназначенный для возвращения
      * @return сгенерируемого значения id
      */
-    public static int increase(){
+    public int increase(){
         count++;
         return count;
     }
 
-    public static int generate(){
+    public int generate(){
         boolean flag = false;
         while (!flag){
             count = (int) (Math.random()*1000000);
-            for (Map.Entry<Integer, StudyGroup> entry: CollectionManager.studyGroupMap.entrySet()){
+            for (Map.Entry<Integer, StudyGroup> entry: collectionManager.getStudyGroupMap().entrySet()){
                 if (count != entry.getValue().getId()) {
                     flag = true;
                     break;
@@ -34,7 +39,7 @@ public class Counter {
         return count;
     }
 
-    public static void clearing(){
+    public void clearing(){
         count = 0;
     }
 }

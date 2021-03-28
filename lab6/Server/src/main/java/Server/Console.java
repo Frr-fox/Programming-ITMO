@@ -12,7 +12,6 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.Map;
 
-import static Server.CollectionManager.studyGroupMap;
 import static Server.Common.CommandManager.*;
 import static Server.Common.Connection.getResponse;
 import static Server.Common.Connection.*;
@@ -24,8 +23,19 @@ import static Server.Common.Connection.*;
  */
 public class Console {
     WorkWithObjects workWithObjects = new WorkWithObjects();
-    CollectionManager collectionManager = new CollectionManager();
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
+    CollectionManager collectionManager;
+
+    public Console() {
+    }
+
+    public Console(CollectionManager collectionManager){
+        this.collectionManager = collectionManager;
+    }
+
+    public void setCollectionManager(CollectionManager collectionManager) {
+        this.collectionManager = collectionManager;
+    }
 
     /**
      * Метод, описывающий конкретную реализацию команды help
@@ -38,19 +48,19 @@ public class Console {
      * Метод, описывающий конкретную реализацию команды info
      */
     public void info() {
-        getResponse().addLineToAnswer("Тип коллекции: " + studyGroupMap.getClass());
-        getResponse().addLineToAnswer("Время инициализации коллекции: " + CollectionManager.getDateIn());
-        getResponse().addLineToAnswer("Количество элементов: " + studyGroupMap.size());
+        getResponse().addLineToAnswer("Тип коллекции: " + collectionManager.getStudyGroupMap().getClass());
+        getResponse().addLineToAnswer("Время инициализации коллекции: " + collectionManager.getDateIn());
+        getResponse().addLineToAnswer("Количество элементов: " + collectionManager.getStudyGroupMap().size());
     }
 
     /**
      * Метод, описывающий конкретную реализацию команды show
      */
     public void show() {
-        if (studyGroupMap.isEmpty()) {
+        if (collectionManager.getStudyGroupMap().isEmpty()) {
             getResponse().addLineToAnswer("Коллекция пуста.");
         } else {
-            getResponse().setMap(studyGroupMap);
+            getResponse().setMap(collectionManager.getStudyGroupMap());
         }
     }
 
@@ -60,15 +70,16 @@ public class Console {
     public void insert(Object[] args) {
         int key = (int) args[0];
         StudyGroup st = (StudyGroup) args[1];
-        if (!studyGroupMap.containsKey(key)) {
-            st.setNextId(Counter.generate());
+        Counter counter = new Counter(collectionManager);
+        if (!collectionManager.getStudyGroupMap().containsKey(key)) {
+            st.setNextId(counter.generate());
             st.setThisKey(key);
-            studyGroupMap.put(key, st);
+            collectionManager.getStudyGroupMap().put(key, st);
             getResponse().addLineToAnswer("Новый элемент успешно добавлен в коллекцию!");
         } else {
             getResponse().addLineToAnswer("Элемент с таким ключом уже существует.");
         }
-        CollectionManager.sort();
+        collectionManager.sort();
     }
 
     /**
@@ -76,14 +87,15 @@ public class Console {
      */
     public void insert(BufferedReader scanner, StringWriter writer, Object[] args) {
         int key = Integer.parseInt(args[0].toString());
+        Counter counter = new Counter(collectionManager);
         try {
-            if (!studyGroupMap.containsKey(key)) {
+            if (!collectionManager.getStudyGroupMap().containsKey(key)) {
                 StudyGroup st = workWithObjects.addStudyGroup(scanner, writer);
                 writer.flush();
                 getResponse().addLineToAnswer(writer.getBuffer().toString());
-                st.setNextId(Counter.generate());
+                st.setNextId(counter.generate());
                 st.setThisKey(key);
-                studyGroupMap.put(key, st);
+                collectionManager.getStudyGroupMap().put(key, st);
                 getResponse().addLineToAnswer("Новый элемент успешно добавлен в коллекцию!");
             } else {
                 getResponse().addLineToAnswer("Элемент с таким ключом уже существует.");
@@ -93,7 +105,7 @@ public class Console {
         } catch (IOException e) {
             getResponse().addLineToAnswer("Возникли проблемы при выводе данных: " + e.getMessage());
         }
-        CollectionManager.sort();
+        collectionManager.sort();
     }
 
     /**
@@ -104,7 +116,7 @@ public class Console {
         StudyGroup st = (StudyGroup) args[1];
         boolean flag = false;
         Integer key = 0;
-        for (Map.Entry<Integer, StudyGroup> entry : studyGroupMap.entrySet()) {
+        for (Map.Entry<Integer, StudyGroup> entry : collectionManager.getStudyGroupMap().entrySet()) {
             if (arg == entry.getValue().getId()) {
                 key = entry.getKey();
                 flag = true;
@@ -114,12 +126,12 @@ public class Console {
         if (flag) {
             st.setThisKey(key);
             st.setId(arg);
-            studyGroupMap.put(key, st);
+            collectionManager.getStudyGroupMap().put(key, st);
             getResponse().addLineToAnswer("Значение элемента коллекции с ID " + arg + " успешно обновлено!");
         } else {
             getResponse().addLineToAnswer("Элемента с таким ID нет в коллекции.");
         }
-        CollectionManager.sort();
+        collectionManager.sort();
     }
 
     /**
@@ -130,7 +142,7 @@ public class Console {
         int arg = (int) args[0];
         try {
             Integer key = 0;
-            for (Map.Entry<Integer, StudyGroup> entry: studyGroupMap.entrySet())
+            for (Map.Entry<Integer, StudyGroup> entry: collectionManager.getStudyGroupMap().entrySet())
                 if (arg == entry.getValue().getId()) {
                     key = entry.getKey();
                     flag = true;
@@ -140,7 +152,7 @@ public class Console {
                 StudyGroup st = workWithObjects.addStudyGroup(scanner, writer);
                 st.setThisKey(key);
                 st.setId(arg);
-                studyGroupMap.put(key, st);
+                collectionManager.getStudyGroupMap().put(key, st);
                 getResponse().addLineToAnswer("Значение элемента коллекции с ID " + arg + " успешно обновлено!");
             } else {
                 getResponse().addLineToAnswer("Элемента с таким ID нет в коллекции.");
@@ -150,7 +162,7 @@ public class Console {
         } catch (IOException e) {
             getResponse().addLineToAnswer("Возникли проблемы при выводе данных: " + e.getMessage());
         }
-        CollectionManager.sort();
+        collectionManager.sort();
     }
 
 
@@ -159,8 +171,8 @@ public class Console {
      */
     public void removeKey(Object[] args) {
         int arg = (int) args[0];
-        if (studyGroupMap.containsKey(arg)) {
-            studyGroupMap.remove(arg);
+        if (collectionManager.getStudyGroupMap().containsKey(arg)) {
+            collectionManager.getStudyGroupMap().remove(arg);
             getResponse().addLineToAnswer("Элемент коллекции с ключом " + arg + " успешно удален!");
         } else getResponse().addLineToAnswer("Элемента с таким ключом нет в коллекции.");
     }
@@ -169,15 +181,15 @@ public class Console {
      * Метод, описывающий конкретную реализацию команды clear
      */
     public void clear() {
-        studyGroupMap.clear();
+        collectionManager.getStudyGroupMap().clear();
         getResponse().addLineToAnswer("Коллекция очищена! ");
     }
 
     /**
      * Метод, описывающий конкретную реализацию команды save
      */
-    public void save(){ //TODO: При завершении работы серверного модуля или при специальной команде
-        JAXBWorker.save(collectionManager, CollectionManager.filepath);
+    public void save(){
+        JAXBWorker.save(collectionManager, collectionManager.filepath);
         getResponse().addLineToAnswer("Коллекция сохранена!");
     }
 
@@ -234,6 +246,7 @@ public class Console {
      * Метод, описывающий конкретную реализацию команды exit
      */
     public void exit() {
+        save();
         Connection.closeSocketChannel();
     }
 
@@ -242,10 +255,10 @@ public class Console {
      */
     public void removeLower(Object[] args) {
         StudyGroup newObject = (StudyGroup) args[0];
-        boolean flag = studyGroupMap.entrySet().stream().anyMatch(entry -> newObject.compareTo(entry.getValue()) > 0);
+        boolean flag = collectionManager.getStudyGroupMap().entrySet().stream().anyMatch(entry -> newObject.compareTo(entry.getValue()) > 0);
         if (flag) {
             getResponse().addToAnswer("Элементы коллекции с ключами");
-            for (Iterator<Map.Entry<Integer, StudyGroup>> entries = studyGroupMap.entrySet().iterator(); entries.hasNext();) {
+            for (Iterator<Map.Entry<Integer, StudyGroup>> entries = collectionManager.getStudyGroupMap().entrySet().iterator(); entries.hasNext();) {
                 Map.Entry<Integer, StudyGroup> entry = entries.next();
                 if (newObject.compareTo(entry.getValue()) > 0) {
                     entries.remove();
@@ -268,10 +281,10 @@ public class Console {
      */
     public void removeLowerKey(Object[] args) {
         int arg = (int) args[0];
-        boolean flag= studyGroupMap.entrySet().stream().anyMatch(entry -> entry.getKey() < arg);
+        boolean flag= collectionManager.getStudyGroupMap().entrySet().stream().anyMatch(entry -> entry.getKey() < arg);
         if (flag) {
             getResponse().addToAnswer("Элементы коллекции с ключами");
-            for (Iterator<Map.Entry<Integer, StudyGroup>> entries = studyGroupMap.entrySet().iterator(); entries.hasNext();) {
+            for (Iterator<Map.Entry<Integer, StudyGroup>> entries = collectionManager.getStudyGroupMap().entrySet().iterator(); entries.hasNext();) {
                 Map.Entry<Integer, StudyGroup> entry = entries.next();
                 if (entry.getKey() < arg) {
                     entries.remove();
@@ -290,8 +303,8 @@ public class Console {
     public void averageOfStudentsCount() {
         long sum;
         try {
-            if (!studyGroupMap.isEmpty()) {
-                sum = studyGroupMap.values().stream().mapToLong(studyGroup -> studyGroup.getStudentsCount() / studyGroupMap.size()).sum();
+            if (!collectionManager.getStudyGroupMap().isEmpty()) {
+                sum = collectionManager.getStudyGroupMap().values().stream().mapToLong(studyGroup -> studyGroup.getStudentsCount() / collectionManager.getStudyGroupMap().size()).sum();
                 getResponse().addLineToAnswer("Среднее значение поля studentsCount: " + sum);
             } else {
                 throw new IsEmptyException();
@@ -308,8 +321,8 @@ public class Console {
         String arg = (String) args[0];
         boolean flag = false;
         try {
-            if (!studyGroupMap.isEmpty()) {
-                for (Map.Entry<Integer, StudyGroup> entry: studyGroupMap.entrySet()) {
+            if (!collectionManager.getStudyGroupMap().isEmpty()) {
+                for (Map.Entry<Integer, StudyGroup> entry: collectionManager.getStudyGroupMap().entrySet()) {
                     if (entry.getValue().getName().contains(arg)) {
                         flag = true;
                         getResponse().addElement(entry.getKey(), entry.getValue());
@@ -333,8 +346,8 @@ public class Console {
         FormOfEducation formOfEducation = (FormOfEducation) args[0];
         boolean flag = false;
         try {
-            if (!studyGroupMap.isEmpty()) {
-                for (Map.Entry<Integer, StudyGroup> entry: studyGroupMap.entrySet()) {
+            if (!collectionManager.getStudyGroupMap().isEmpty()) {
+                for (Map.Entry<Integer, StudyGroup> entry: collectionManager.getStudyGroupMap().entrySet()) {
                         if (entry.getValue().getFormOfEducation().compareTo(formOfEducation) > 0) {
                             flag = true;
                             getResponse().addElement(entry.getKey(), entry.getValue());

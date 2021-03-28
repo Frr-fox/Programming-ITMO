@@ -15,9 +15,7 @@ public class RemoveKey extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public RemoveKey(Console console){
-        this.setCommandName("remove_key");
-        this.setText("Удаляет элемент из коллекции по его ключу");
-        this.setArguments(" key");
+        super("remove_key", "Удаляет элемент из коллекции по его ключу", " key");
         this.console = console;
     }
 

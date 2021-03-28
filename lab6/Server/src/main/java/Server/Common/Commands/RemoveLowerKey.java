@@ -15,9 +15,7 @@ public class RemoveLowerKey extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public RemoveLowerKey(Console console){
-        this.setCommandName("remove_lower_key");
-        this.setText("Удаляет из коллекции все элементы, ключ которых меньше, чем заданный");
-        this.setArguments(" key");
+        super("remove_lower_key", "Удаляет из коллекции все элементы, ключ которых меньше, чем заданный", " key");
         this.console = console;
     }
 

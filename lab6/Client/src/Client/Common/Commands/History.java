@@ -13,9 +13,7 @@ public class History extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public History(){
-        this.setCommandName("history");
-        this.setText("Выводит последние 15 команд ");
-        this.setArguments("");
+        super("history", "Выводит последние 15 команд ", "");
     }
 
     /**

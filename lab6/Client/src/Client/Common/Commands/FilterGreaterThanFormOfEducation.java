@@ -15,9 +15,7 @@ public class FilterGreaterThanFormOfEducation extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public FilterGreaterThanFormOfEducation() {
-        this.setCommandName("filter_greater_than_form_of_education");
-        this.setText("\nВыводит элементы, значение поля formOfEducation которых больше заданного");
-        this.setArguments(" formOfEducation(DISTANCE_EDUCATION, FULL_TIME_EDUCATION, EVENING_CLASSES)");
+        super("filter_greater_than_form_of_education", "Выводит элементы, значение поля formOfEducation которых больше заданного", " formOfEducation(DISTANCE_EDUCATION, FULL_TIME_EDUCATION, EVENING_CLASSES)");
     }
 
     /**

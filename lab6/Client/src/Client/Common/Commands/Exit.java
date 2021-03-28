@@ -18,9 +18,7 @@ public class Exit extends AbstractCommand {
      * Конструктор для создания нового объекта
      */
     public Exit(){
-        this.setCommandName("exit");
-        this.setText("Завершает программу");
-        this.setArguments("");
+        super("exit", "Завершает программу", "");
     }
 
     /**

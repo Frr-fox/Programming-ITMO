@@ -1,6 +1,7 @@
 package Client;
 
 import Client.Common.CommandManager;
+import Client.Common.Commands.Exit;
 import Common.ConcreteCommand;
 import Client.Common.Connection;
 import Common.Response;
@@ -27,14 +28,17 @@ public class Client {
             try {
                 CommandManager.execute(concreteCommand.getCommandName(), concreteCommand.getArgument());
                 commandManager.run(concreteCommand);
-                sendObject(concreteCommand); //отправка объекта ConcreteCommand на сервер
+                sendObject(concreteCommand);
                 Response[] objects = receiveAll();
                 if (objects != null) {
                     for (Response response : objects) {
                         if (response != null) CommandManager.executeResponse(response);
                         else break;
                     }
-                } else System.out.println("Возникла ошибка при передаче данных. Ответ от сервера не распознан");
+                } else {
+                    System.out.println("Сервер обрабатывает запросы с другого клиента");
+                    new Exit().execute();
+                }
             } catch (WrongAmountOfArgsException | NoCommandException e) {
                 System.out.println(e.getMessage());
             } catch (NumberFormatException e) {

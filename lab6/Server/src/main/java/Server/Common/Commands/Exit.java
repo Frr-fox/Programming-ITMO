@@ -15,9 +15,7 @@ public class Exit extends AbstractCommand {
      * @param console объект, выполняющий роль receiver'a
      */
     public Exit(Console console){
-        this.setCommandName("exit");
-        this.setText("Завершает программу");
-        this.setArguments("");
+        super("exit", "Завершает программу", "");
         this.console = console;
     }
 
